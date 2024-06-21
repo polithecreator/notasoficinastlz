@@ -73,6 +73,7 @@ function renderNotes(filteredNotes = notes) {
                     ${note.status === 'pago' ? 'Pago' : 'Marcar como Pago'}
                 </button>
                 ${note.status === 'pago' ? `<button class="print" onclick="printReceipt(${index})">Imprimir Recibo</button>` : ''}
+                <button class="delete" onclick="deleteNote(${index})">Excluir</button>
             </div>
         `;
 
@@ -84,6 +85,14 @@ function toggleStatus(index) {
     notes[index].status = notes[index].status === 'pago' ? 'pendente' : 'pago';
     saveNotesToLocalStorage();
     renderNotes();
+}
+
+function deleteNote(index) {
+    if (confirm('Tem certeza que deseja excluir esta nota?')) {
+        notes.splice(index, 1);
+        saveNotesToLocalStorage();
+        renderNotes();
+    }
 }
 
 function clearForm() {
@@ -151,3 +160,4 @@ function printReceipt(index) {
     `);
     receiptWindow.document.close();
 }
+
